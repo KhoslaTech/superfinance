@@ -1,0 +1,104 @@
+﻿@model OpenAccountModel
+@{
+	ViewBag.Title = "Create New Account";
+}
+
+<section class="form">
+	@using (Html.BeginForm())
+	{
+		<h1> @ViewBag.Title </h1>
+		<hr />
+
+		@Html.AntiForgeryToken()
+
+		<fieldset>
+			<div class="form-group">
+				@Html.LabelFor(m => m.IdentityNumber, new { @class = "label-big" })
+				@Html.TextBoxFor(m => m.IdentityNumber, new { @class = "form-control", placeholder = "Please enter identity number" })
+				@Html.ValidationMessageFor(m => m.IdentityNumber)
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(m => m.NomineeUsername, new { @class = "label-big" })
+				@Html.TextBoxFor(m => m.NomineeUsername, new { @class = "form-control", placeholder = "Please enter nominee email address" })
+				@Html.ValidationMessageFor(m => m.NomineeUsername)
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(m => m.BankId, new { @class = "label-big" })
+				@Html.DropDownListFor(m => m.BankId, Model.Banks.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }), new { @id = "bank", @class = "form-control", placeholder = "Please select bank", @onchange = "bankChanged()" })
+				@Html.ValidationMessageFor(m => m.BankId)
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(m => m.BranchId, new { @class = "label-big" })
+				@Html.DropDownListFor(m => m.BranchId, new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), new { @id = "branch", @class = "form-control", placeholder = "Please select branch" })
+				@Html.ValidationMessageFor(m => m.BranchId)
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(m => m.AccountTypeId, new { @class = "label-big" })
+				@Html.DropDownListFor(m => m.AccountTypeId, new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), new { @id = "accountType", @class = "form-control", placeholder = "Please select account type" })
+				@Html.ValidationMessageFor(m => m.AccountTypeId)
+			</div>
+
+			<br />
+			<br />
+
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</fieldset>
+	}
+</section>
+
+@section scripts{
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			bankChanged();
+		});
+
+		function bankChanged() {
+			var bankId = $('#bank').val();
+			getBranches(bankId);
+			getAccountTypes(bankId);
+		}
+
+		function getBranches(bankId) {
+			$.ajax({
+				url: 'listbranches',
+				type: "GET",
+				dataType: "JSON",
+				data: { bankId: bankId },
+				success: function (result) {
+					$("#branch").html(""); // clear before appending new list
+					$.each(result.Records,
+						function (i, branch) {
+							$("#branch").append(
+								$('<option></option>').val(branch.Id).html(branch.Name));
+						});
+				}
+			});
+		}
+
+		function getAccountTypes(bankId) {
+			$.ajax({
+				url: 'listaccounttypes',
+				type: "GET",
+				dataType: "JSON",
+				data: { bankId: bankId },
+				success: function (result) {
+					$("#accountType").html(""); // clear before appending new list
+					$.each(result.Records,
+						function (i, accountType) {
+							$("#accountType").append(
+								$('<option></option>').val(accountType.Id).html(accountType.Name));
+						});
+				}
+			});
+		}
+
+	</script>
+}
+

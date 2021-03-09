@@ -1,0 +1,180 @@
+﻿@using SuperFinance.DataModels
+@model AccountDetailsModel
+
+@{
+	ViewBag.Title = "Details for Account " + Model.Account.AccountNumber;
+	ViewBag.jTableStyle = "~/Scripts/dist/jtable/themes/metro/blue/jtable.css";
+}
+
+<section class="home-content">
+	<h1> @ViewBag.Title </h1>
+	<hr />
+
+	<div class="row">
+		<div class="col-6">
+			<dl>
+				<dt>Account Balance</dt>
+				<dd>@Model.Account.Balance</dd>
+			</dl>
+		</div>
+		<div class="col-6">
+			<dl>
+				<dt>Holder Name</dt>
+				<dd>@Model.Account.Name</dd>
+			</dl>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-6">
+			<dl>
+				<dt>Account Type</dt>
+				<dd>@Model.Account.AccountType</dd>
+			</dl>
+		</div>
+		<div class="col-6">
+			<dl>
+				<dt>Branch</dt>
+				<dd>@Model.Account.Branch</dd>
+			</dl>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-6">
+			<dl>
+				<dt>Account Status</dt>
+				<dd>@Model.Account.Status</dd>
+			</dl>
+		</div>
+		<div class="col-6">
+			<dl>
+				<dt>Opened On</dt>
+				<dd>@Html.DisplayFor(m => m.Account.CreatedDate)</dd>
+			</dl>
+		</div>
+	</div>
+
+	<div class="btn-group">
+		@if (Model.Account.AccountKind == AccountKind.Investment && Context.UserService().IsAuthorized(SFPermissionCodes.CreateTransfer, Model.Account.Id.GetValueOrDefault()))
+		{
+			<button id="transfer" class="btn btn-default" onclick="window.location.href = '@Url.Action("Transfer", new { accountId = Model.Account.Id })'">Create Transfer</button>
+		}
+		@if (Context.UserService().PossessesPermission(SFPermissionCodes.CreateDeposit))
+		{
+			<button id="transfer" class="btn btn-default" onclick="window.location.href = '@Url.Action("Deposit", new { accountId = Model.Account.Id })'">Create Deposit</button>
+		}
+		@if (Context.UserService().PossessesPermission(SFPermissionCodes.CreateWithdrawal) && Model.Account.AccountKind == AccountKind.Investment)
+		{
+			<button id="transfer" class="btn btn-default" onclick="window.location.href = '@Url.Action("Withdrawal", new { accountId = Model.Account.Id })'">Create Withdrawal</button>
+		}
+		@if (Context.UserService().PossessesPermission(SFPermissionCodes.ChangeStatus))
+		{
+			<button id="transfer" class="btn btn-default" onclick="window.location.href = '@Url.Action("ChangeStatus", "ManageAccount", new { accountId = Model.Account.Id })'">Change Status</button>
+		}
+	</div>
+	<div id="tableContainer" class="jtable-div"></div>
+</section>
+
+@section scripts
+{
+
+	<script src="~/scripts/dist/jquery-ui.min.js"></script>
+	<script src="~/scripts/dist/jtable.min.js"></script>
+
+	<script type="text/javascript">
+            $(function () {
+
+                $('#tableContainer').jtable({
+                        title: 'Transaction History',
+                        paging: true,
+                        sorting: false,
+                        columnSelectable: false,
+                        AntiForgeryToken: '@Html.AntiForgeryTokenValue()',
+                        actions: {
+                            listAction: '@Url.Action("List", "AccountDetails", new { accountId = Model.Account.Id })',
+                        },
+                        fields: {
+                            Id: {
+                                key: true,
+                                create: false,
+                                edit: false,
+                                list: false
+                            },
+                            Date: {
+								title: 'Date'
+                            },
+                            Amount: {
+								title: 'Amount'
+                            },
+                            TransactionType: {
+								title: 'Transaction Type',
+								options: { '0': 'Credit', '1': 'Debit' }
+							},
+							Remarks: {
+								title: 'Remarks'
+							}
+                        }
+                }).jtable('load');
+            });
+	</script>
+}
+
+@section cssImport
+{
+	<link href="@Url.Content(ViewBag.jTableStyle)" rel="stylesheet" type="text/css" />
+
+	<style>
+		.child-opener-image {
+			cursor: pointer;
+		}
+
+		.child-opener-image-column {
+			text-align: center;
+		}
+
+		.jtable-dialog-form {
+			min-width: 220px;
+		}
+
+			.jtable-dialog-form input[type="text"] {
+				min-width: 200px;
+			}
+
+		div.jtable-main-container > div.jtable-title {
+			background-color: #008cba;
+		}
+
+		.jtable-column-header {
+			background-color: #808080;
+		}
+
+		.jtable-toolbar > .jtable-toolbar-item {
+			background-color: #808080;
+		}
+
+		.jtable-command-column-header {
+			background-color: #808080;
+		}
+
+		div.jtable-main-container > div.jtable-bottom-panel {
+			background-color: #808080;
+		}
+
+		.jtable-page-list > jtable-page-number-disabled {
+			background-color: #808080;
+		}
+
+		div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-space, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-first, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-last, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-previous, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-next, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-active {
+			background-color: #808080;
+		}
+
+		div.jtable-main-container > div.jtable-title div.jtable-toolbar span.jtable-toolbar-item {
+			background-color: #808080;
+		}
+
+			div.jtable-main-container > div.jtable-title div.jtable-toolbar span.jtable-toolbar-item:hover {
+				background-color: #008cba;
+			}
+	</style>
+}

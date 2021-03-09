@@ -1,0 +1,225 @@
+﻿@{
+	ViewBag.Title = "Users";
+	ViewBag.jTableStyle = "~/Scripts/dist/jtable/themes/metro/blue/jtable.css";
+}
+
+    <section class="home-content">
+        <h1> @ViewBag.Title </h1>
+        <hr />
+        <div class="btn-group">
+            <button id="children" class="btn btn-default">Children</button>
+            <button id="descendants" class="btn btn-default">Descendants</button>
+        </div>
+        <div id="tableContainer" class="jtable-div"></div>
+    </section>
+
+@section scripts
+{
+
+        <script src="~/scripts/dist/jquery-ui.min.js"></script>
+        <script src="~/scripts/dist/jtable.min.js"></script>
+
+    <script type="text/javascript">
+            $(function () {
+
+                $('#tableContainer').jtable({
+                        title: 'My Subordinates',
+                        paging: true,
+                        sorting: false,
+                        columnSelectable: false,
+                        AntiForgeryToken: '@Html.AntiForgeryTokenValue()',
+                        toolbar: {
+                            items: [
+                                {
+                                    icon: true,
+                                    cssClass: 'jtable-toolbar-item-add-record',
+                                    text: 'Add New record',
+                                    click: function () {
+                                        window.location.href = '@Url.Action("Add")';
+                                    }
+                                }
+                            ]
+                        },
+                        actions: {
+                            listAction: '@Url.Action("ListChildren")',
+                            deleteAction: '@Url.Action("Delete")'
+                        },
+                        fields: {
+                            Id: {
+                                key: true,
+                                create: false,
+                                edit: false,
+                                list: false
+                            },
+                            Name: {
+                                title: 'Name'
+                            },
+                            Username: {
+                                title: 'Email'
+                            },
+                            CreatedDate: {
+                                title: 'Date Created'
+                            },
+                            ParentName: {
+                                title: 'Parent'
+                            }
+                        },
+                        rowButtons: [
+                            function(data){
+                                return {
+                                    text: 'Change Password',
+                                    cssClass: 'jtable-change-password-command-button',
+                                    click: function(data){
+                                        window.location.href = '@Url.Action("ChangePassword")/' + data.record.Id;
+                                    }
+                                };
+                            },
+                            function(data){
+	                            return {
+		                            text: 'Block Password',
+		                            cssClass: 'jtable-change-password-command-button',
+		                            click: function(data){
+			                            window.location.href = '@Url.Action("BlockPassword")/' + data.record.Id;
+		                            }
+	                            };
+                            },
+                            function(data){
+                                return data.record.Suspended
+                                    ? {
+                                        text: 'Activate',
+                                        cssClass: 'jtable-activate-command-button',
+                                        click: function(data){
+                                            window.location.href = '@Url.Action("Activate")/' + data.record.Id;
+                                        }
+                                    }
+                                    : {
+                                        text: 'Suspend',
+                                        cssClass: 'jtable-suspend-command-button',
+                                        click: function(data){
+                                            window.location.href = '@Url.Action("Suspend")/' + data.record.Id;
+                                        }
+                                    };
+                            }
+                        ]
+                    }).jtable('changeColumnVisibility', 'ParentName', 'hidden')
+                    .jtable('load');
+                $("#descendants").click(function () {
+                    $('#tableContainer').jtable('option', 'actions',
+                            {
+                                listAction: '@Url.Action("ListDescendants")'
+                            }).jtable('changeColumnVisibility', 'ParentName', 'visible')
+                        .jtable('load');
+                });
+                $("#children").click(function () {
+                    $('#tableContainer').jtable('option', 'actions',
+                            {
+                                listAction: '@Url.Action("ListChildren")'
+                            }).jtable('changeColumnVisibility', 'ParentName', 'hidden')
+                        .jtable('load');
+                });
+            });
+    </script>
+}
+
+@section cssImport
+{
+    <link href="@Url.Content(ViewBag.jTableStyle)" rel="stylesheet" type="text/css" />
+
+    <style>
+        .child-opener-image {
+            cursor: pointer;
+        }
+
+        .child-opener-image-column {
+            text-align: center;
+        }
+
+        .jtable-dialog-form {
+            min-width: 220px;
+        }
+
+            .jtable-dialog-form input[type="text"] {
+                min-width: 200px;
+            }
+
+        .jtable-permission-command-button {
+            background: url('/images/u-permission.png') no-repeat;
+            width: 16px;
+            height: 16px;
+            opacity: 0.4;
+        }
+
+            .jtable-permission-command-button:hover {
+                opacity: 0.8;
+            }
+
+        .jtable-change-password-command-button {
+            background: url('/images/u-change-password.png') no-repeat;
+            width: 16px;
+            height: 16px;
+            opacity: 0.4;
+        }
+
+            .jtable-change-password-command-button:hover {
+                opacity: 0.8;
+            }
+
+        .jtable-suspend-command-button {
+            background: url('/images/u-suspend.png') no-repeat;
+            width: 16px;
+            height: 16px;
+            opacity: 0.4;
+        }
+
+            .jtable-suspend-command-button:hover {
+                opacity: 0.8;
+            }
+
+        .jtable-activate-command-button {
+            background: url('/images/u-activate.png') no-repeat;
+            width: 16px;
+            height: 16px;
+            opacity: 0.4;
+        }
+
+            .jtable-activate-command-button:hover {
+                opacity: 0.8;
+            }
+
+        div.jtable-main-container > div.jtable-title {
+            background-color: #008cba;
+        }
+
+        .jtable-column-header {
+            background-color: #808080;
+        }
+
+        .jtable-toolbar > .jtable-toolbar-item {
+            background-color: #808080;
+        }
+
+        .jtable-command-column-header {
+            background-color: #808080;
+        }
+
+        div.jtable-main-container > div.jtable-bottom-panel {
+            background-color: #808080;
+        }
+
+        .jtable-page-list > jtable-page-number-disabled {
+            background-color: #808080;
+        }
+
+        div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-space, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-first, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-last, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-previous, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-next, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-active {
+            background-color: #808080;
+        }
+
+        div.jtable-main-container > div.jtable-title div.jtable-toolbar span.jtable-toolbar-item {
+            background-color: #808080;
+        }
+
+            div.jtable-main-container > div.jtable-title div.jtable-toolbar span.jtable-toolbar-item:hover {
+                background-color: #008cba;
+            }
+    </style>
+}

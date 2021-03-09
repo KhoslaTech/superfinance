@@ -1,0 +1,26 @@
+{
+	"version": "1.0.0",
+	"name": "asp.net",
+	"private": true,
+	"devDependencies": {
+		"bootstrap": "^4.5.2",
+		"font-awesome": "^4.7.0",
+		"grunt": "1.2.1",
+		"grunt-contrib-clean": "2.0.0",
+		"grunt-contrib-concat": "1.0.1",
+		"grunt-contrib-copy": "1.0.0",
+		"grunt-contrib-cssmin": "3.0.0",
+		"grunt-contrib-jshint": "2.1.0",
+		"grunt-contrib-uglify": "5.0.0",
+		"grunt-contrib-watch": "1.1.0",
+		"grunt-modernizr": "3.0.1",
+		"jquery": "^3.5.1",
+		"jquery-ui-dist": "1.12.1",
+		"jquery-validation": "^1.19.3",
+		"jquery-validation-unobtrusive": "3.2.11",
+		"jtable": "2.6.0",
+		"modernizr": "3.11.3",
+		"popper.js": "^1.16.1"
+	},
+	"dependencies": {}
+}

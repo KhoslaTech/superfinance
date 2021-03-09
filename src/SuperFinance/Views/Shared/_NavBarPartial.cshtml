@@ -1,0 +1,57 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-primary" role="navigation">
+	@Html.ActionLink(Context.AppService().Title, "Index", "Home", null, new { @class = "navbar-brand" })
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarItems" aria-controls="navbarItems" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarItems">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item @Html.IsSelected("Index", "Home")">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
+			@if (Context.UserService().IsAuthenticated)
+			{
+				if (Context.UserService().PossessesPermission(PermissionCodes.AddUser))
+				{
+					<li class="nav-item @Html.IsSelected("Index", "ManageUser")">@Html.ActionLink("Users", "Index", "ManageUser", null, new { @class = "nav-link" })</li>
+				}
+				if (Context.UserService().PossessesPermission(SFPermissionCodes.IndexCustomerAccount))
+				{
+					<li class="nav-item @Html.IsSelected("Index", "ManageAccount")">@Html.ActionLink("Accounts", "Index", "ManageAccount", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+				}
+				if (Context.UserService().PossessesPermission(SFPermissionCodes.ManageBranch))
+				{
+					<li class="nav-item @Html.IsSelected("Index", "Branch")">@Html.ActionLink("Branches", "Index", "Branch", routeValues: null, new { @class = "nav-link" })</li>
+				}
+				if (Context.UserService().PossessesPermission(SFPermissionCodes.ManageAccountType))
+				{
+					<li class="nav-item @Html.IsSelected("Index", "AccountType")">@Html.ActionLink("Account Types", "Index", "AccountType", routeValues: null, new { @class = "nav-link" })</li>
+				}
+				if (Context.UserService().PossessesPermission(SFPermissionCodes.ManageBank))
+				{
+					<li class="nav-item @Html.IsSelected("Index", "Bank")">@Html.ActionLink("Manage Bank", "Index", "Bank", routeValues: null, new { @class = "nav-link" })</li>
+				}
+				if (Context.UserService().PossessesPermission(SFPermissionCodes.IndexAccount))
+				{
+					<li class="nav-item @Html.IsSelected("Index", "Account")">@Html.ActionLink("My Accounts", "Index", "Account", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+				}
+				if (Context.UserService().IsAuthorized(SFPermissionCodes.OpenAccount))
+				{
+					<li class="nav-item @Html.IsSelected("Open", "Account")">@Html.ActionLink("Open New Account", "Open", "Account", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+				}
+
+				<li class="nav-item @Html.IsSelected("Index", "User")">@Html.ActionLink(Context.UserService().CurrentUserFullName, "Index", "User", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+				<li class="nav-item ">
+					<a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a>
+					@using (Html.BeginForm("SignOut", "User", FormMethod.Post, new { id = "logoutForm" }))
+					{
+						@Html.AntiForgeryToken()
+					}
+				</li>
+			}
+			else
+			{
+				<li class="nav-item @Html.IsSelected("Contact", "Home")">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
+				<li class="nav-item @Html.IsSelected("SignUp", "Home")">@Html.ActionLink("Sign Up", "SignUp", "Home", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
+				<li class="nav-item @Html.IsSelected("SignIn", "User")">@Html.ActionLink("Sign In", "SignIn", "User", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+			}
+		</ul>
+	</div>
+</nav>

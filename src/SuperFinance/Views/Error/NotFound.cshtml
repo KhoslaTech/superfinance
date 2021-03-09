@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Page Not Found";
+}
+<section class="error-content">
+    <figure>
+        <img class="error-img" src="~/images/404.png" alt="Page Not Found">
+    </figure>
+    <h1>@ViewBag.Title</h1>
+    <hr />
+    <p>
+        OOPS! We're unable to locate a page with the specified URL. Most likely causes:
+    </p>
+    <ul>
+        <li class="error-reason">You have entered or copied an incorrect URL. OR</li>
+        <li class="error-reason">The page might have been removed or its URL has been changed.</li>
+    </ul>
+    <br/>
+    <p>
+        If you believe that the page should have been here, you can @Html.ActionLink("let us know", "Contact", "Home", new { area = "" }, null) and we'll be glad to help.
+    </p>
+</section>

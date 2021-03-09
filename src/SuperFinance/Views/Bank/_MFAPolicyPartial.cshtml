@@ -1,0 +1,24 @@
+﻿@model SetMFAPolicyModel
+
+<section class="form-container form-popup">
+	@using (Html.BeginForm("MFAPolicy", "Bank", FormMethod.Post))
+	{
+		@Html.AntiForgeryToken()
+		<fieldset>
+			<div class="form-control-static">
+				@Html.CheckBoxFor(m => m.EnforceMFA, new { @id = "enforceMfa", @onchange = "enforceMFAChanged()" })
+				@Html.LabelFor(m => m.EnforceMFA)
+			</div>
+
+			<div id="skipMfaCheckDiv" class="form-control-static hidden">
+				@Html.CheckBoxFor(m => m.SkipMFAInsideNetwork, new { @id = "skipMfaCheck" })
+				@Html.LabelFor(m => m.SkipMFAInsideNetwork)
+			</div>
+
+			<br />
+			<button type="submit" class="btn">Update</button>
+			<button type="button" class="btn cancel" onclick="toggleBox(-1)">Close</button>
+
+		</fieldset>
+	}
+</section>

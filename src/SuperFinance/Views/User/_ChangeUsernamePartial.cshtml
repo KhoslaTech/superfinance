@@ -1,0 +1,27 @@
+﻿@model ChangeUsernameModel
+
+<section class="form-container form-popup">
+    @using (Html.BeginForm("ChangeUsername", "user", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <fieldset>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Username, new { @class = "label-big" })
+                @Html.TextBoxFor(m => m.Username, new { placeholder = "Please enter username" })
+                @Html.ValidationMessageFor(m => m.Username)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "label-big" })
+                @Html.PasswordFor(m => m.Password, new { placeholder = "Please enter password" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+
+            <br />
+            <button type="submit" class="btn">Change Username</button>
+            <button type="button" class="btn cancel" onclick="toggleBox(-1)">Close</button>
+
+        </fieldset>
+    }
+</section>

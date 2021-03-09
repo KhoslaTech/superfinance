@@ -1,0 +1,85 @@
+﻿@using ASKSource.Models
+@{
+	ViewBag.Title = "Profile";
+}
+
+<section class="container-form">
+	<figure>
+		<img class="admincontrol-img" src="~/images/manageacc.png" alt="Manage Account" />
+	</figure>
+	<h1>@ViewBag.Title</h1>
+	<ul class="form-tab-links">
+		<li class="nav-item"><a class="nav-link" href="#passwordBox" data-index="@ManageActionId.ChangePassword">Password</a></li>
+		<li class="nav-item"><a class="nav-link" href="#personalBox" data-index="@ManageActionId.ChangePersonal">Personal</a></li>
+		<li class="nav-item"><a class="nav-link" href="#emailBox" data-index="@ManageActionId.ChangeUsername">Email</a></li>
+		<li class="nav-item"><a class="nav-link" href="#2faBox" data-index="@ManageActionId.ChangeTwoFactorAuthSettings">Two-Factor Auth</a></li>
+		@if (Context.UserService().CurrentUser.UserType != UserType.Staff)
+		{
+			<li class="nav-item"><a class="nav-link" href="#firewallBox" data-index="@ManageActionId.ChangeFirewallStatus">Firewall</a></li>
+		}
+	</ul>
+	<div data-index="@ManageActionId.ChangePassword" class="hidden">
+		<partial name="_ChangePasswordPartial" />
+	</div>
+	<div data-index="@ManageActionId.ChangePersonal" class="hidden">
+		<partial name="_ChangePersonalPartial" model="(PersonalModel) ViewBag.pModel" />
+	</div>
+	<div data-index="@ManageActionId.ChangeUsername" class="hidden">
+		<partial name="_ChangeUsernamePartial" model="(ChangeUsernameModel) ViewBag.eModel" />
+	</div>
+	<div data-index="@ManageActionId.ChangeTwoFactorAuthSettings" class="hidden">
+		<partial name="_ChangeTwoFactorAuthSettingsPartial" model="(ChangeTwoFactorAuthSettingsModel) ViewBag.tModel" />
+	</div>
+	@if (Context.UserService().CurrentUser.UserType != UserType.Staff)
+	{
+		<div data-index="@ManageActionId.ChangeFirewallStatus" class="hidden">
+			<partial name="_ChangeFirewallStatusPartial" model="(FirewallStatusModel) ViewBag.fModel" />
+		</div>
+	}
+</section>
+
+@section Scripts {
+
+	<script type="text/javascript">
+		var action = '@ViewBag.ManageId';
+        $(function() {
+            var boxes = [];
+            var links = [];
+            $("div[data-index]").each(function() {
+                boxes[this.getAttribute("data-index")] = $(this);
+            });
+
+            $("a[data-index]").each(function() {
+                links[this.getAttribute("data-index")] = $(this);
+            });
+
+            $("a[data-index]").click(function(e) {
+                e.preventDefault();
+                toggleBox(this.getAttribute("data-index"));
+            });
+
+            window.toggleBox = function (index) {
+                for (var i in boxes) {
+                    if (i === index) boxes[index].removeClass("hidden");
+                    else boxes[i].addClass("hidden");
+                }
+
+                for (var j in links) {
+                    if (j === index) links[j].addClass("link-active");
+                    else links[j].removeClass("link-active");
+                }
+            }
+
+            toggleBox(action);
+        });
+
+        $(document).ready(function () {
+            window.setTimeout(function() {
+                $(".alert-success").fadeTo(1500, 0).slideUp(500, function(){
+                    $(this).remove();
+                });
+            }, 5000);
+        });
+
+	</script>
+}

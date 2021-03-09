@@ -1,0 +1,35 @@
+﻿@model ChangeAccountStatusModel
+
+@{
+	ViewBag.Title = "Change Account Status";
+}
+
+<section class="form" id="changeStatusForm">
+	@using (Html.BeginForm())
+	{
+		<h1> @ViewBag.Title </h1>
+		<hr />
+
+		@Html.AntiForgeryToken()
+
+		<fieldset>
+			<div class="form-group">
+				@Html.LabelFor(m => m.Status, new { @class = "label-big" })
+				@Html.DropDownListFor(m => m.Status, Model.Statuses.Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() }), new { @class = "form-control", placeholder = "Please select account status" })
+				@Html.ValidationMessageFor(m => m.Status)
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(m => m.Reason, new { @class = "label-big" })
+				@Html.TextBoxFor(m => m.Reason, new { @class = "form-control", placeholder = "Please enter reason" })
+				@Html.ValidationMessageFor(m => m.Reason)
+			</div>
+
+			<br />
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">Change Status</button>
+			</div>
+
+		</fieldset>
+	}
+</section>

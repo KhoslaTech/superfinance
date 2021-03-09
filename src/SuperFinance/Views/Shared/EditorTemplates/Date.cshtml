@@ -1,0 +1,13 @@
+﻿@model DateTime?
+@if (Model.HasValue)
+{
+    var date = Model.Value;
+@Html.TextBox("", !string.IsNullOrWhiteSpace(ViewData.ModelMetadata.DisplayFormatString)
+? date.ToString(ViewData.ModelMetadata.DisplayFormatString) 
+: date.ToShortDateString(),
+    new { @class = "date" })
+}
+else
+{
+@Html.TextBox("", null, new { @class = "date" })
+}

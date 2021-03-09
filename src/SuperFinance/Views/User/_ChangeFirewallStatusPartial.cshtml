@@ -1,0 +1,17 @@
+﻿@model FirewallStatusModel
+
+<section class="form-container form-popup">
+	@using (Html.BeginForm("FirewallStatus", "User", FormMethod.Post))
+	{
+		@Html.AntiForgeryToken()
+
+		<input type=hidden name="Enabled" value="@((!Model.FirewallEnabled).ToString())" />
+
+		<fieldset>
+			<br />
+			<button type="submit" class="btn btn-primary">@(Model.FirewallEnabled ? "Turn Off" : "Turn On")</button>
+			<button type="button" class="btn btn-secondary" onclick="window.location.href = '@Url.Action("Index", "Firewall", new {entityUrn = Model.EntityUrn})'">Manage IP Networks White-List</button>
+			<button type="button" class="btn cancel" onclick="toggleBox(-1)">Close</button>
+		</fieldset>
+	}
+</section>

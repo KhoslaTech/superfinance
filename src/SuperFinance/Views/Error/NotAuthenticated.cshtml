@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Unauthenticated";
+}
+
+<section class="error-content">
+    <figure>
+        <img class="error-img" src="~/images/401.png" alt="Unauthenticated">
+    </figure>
+    <h1 >@ViewBag.Title</h1>
+    <hr />
+    <p>
+        We're unable to authenticate your identity for the specified action.
+    </p>
+    <p>
+        If you believe that this should not be the case, contact your administrator at <a href="mailto:@Context.AppService().SupportMailId">@Context.AppService().SupportMailId</a>
+    </p>
+</section>

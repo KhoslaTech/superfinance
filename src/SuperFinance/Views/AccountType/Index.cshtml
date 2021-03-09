@@ -1,0 +1,118 @@
+﻿@{
+	ViewBag.Title = "Account Types";
+	ViewBag.jTableStyle = "~/Scripts/dist/jtable/themes/metro/blue/jtable.css";
+}
+
+<section class="home-content">
+	<h1> @ViewBag.Title </h1>
+	<div id="tableContainer" class="jtable-div"></div>
+</section>
+
+@section scripts
+{
+
+	<script src="~/scripts/dist/jquery-ui.min.js"></script>
+	<script src="~/scripts/dist/jtable.min.js"></script>
+
+	<script type="text/javascript">
+            $(function () {
+
+                $('#tableContainer').jtable({
+					title: 'Account Types',
+                        paging: true,
+                        sorting: false,
+                        columnSelectable: false,
+                        AntiForgeryToken: '@Html.AntiForgeryTokenValue()',
+                        actions: {
+                            listAction: '@Url.Action("List")',
+							deleteAction: '@Url.Action("Delete")',
+                            createAction: '@Url.Action("Add")',
+                            updateAction: '@Url.Action("Edit")'
+                        },
+                        fields: {
+                            Id: {
+                                key: true,
+                                create: false,
+                                edit: false,
+                                list: false
+                            },
+                            Name: {
+                                title: 'Name'
+                            },
+                            InterestRate: {
+	                            title: 'Interest Rate'
+                            },
+                            Kind: {
+								title: 'Kind',
+								options: { '0': 'Investment', '1': 'Loan' }
+                            }
+                        },
+                        recordAdded: function(event, data) {
+	                        $("#tableContainer").jtable('reload');
+                        },
+                        recordDeleted: function(event, data) {
+	                        $("#tableContainer").jtable('reload');
+                        }
+                }).jtable('load');
+            });
+	</script>
+}
+
+@section cssImport
+{
+	<link href="@Url.Content(ViewBag.jTableStyle)" rel="stylesheet" type="text/css" />
+
+	<style>
+		.child-opener-image {
+			cursor: pointer;
+		}
+
+		.child-opener-image-column {
+			text-align: center;
+		}
+
+		.jtable-dialog-form {
+			min-width: 220px;
+		}
+
+			.jtable-dialog-form input[type="text"] {
+				min-width: 200px;
+			}
+
+		div.jtable-main-container > div.jtable-title {
+			background-color: #008cba;
+		}
+
+		.jtable-column-header {
+			background-color: #808080;
+		}
+
+		.jtable-toolbar > .jtable-toolbar-item {
+			background-color: #808080;
+		}
+
+		.jtable-command-column-header {
+			background-color: #808080;
+		}
+
+		div.jtable-main-container > div.jtable-bottom-panel {
+			background-color: #808080;
+		}
+
+		.jtable-page-list > jtable-page-number-disabled {
+			background-color: #808080;
+		}
+
+		div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-space, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-first, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-last, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-previous, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-next, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-active {
+			background-color: #808080;
+		}
+
+		div.jtable-main-container > div.jtable-title div.jtable-toolbar span.jtable-toolbar-item {
+			background-color: #808080;
+		}
+
+			div.jtable-main-container > div.jtable-title div.jtable-toolbar span.jtable-toolbar-item:hover {
+				background-color: #008cba;
+			}
+	</style>
+}

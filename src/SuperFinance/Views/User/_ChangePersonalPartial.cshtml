@@ -1,0 +1,30 @@
+﻿@model PersonalModel
+
+<section class="form-container form-popup">
+    @using (Html.BeginForm("Personal", "user", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <fieldset>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "label-big" })
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Please enter name" })
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TimeZoneId, new { @class = "label-big" })
+                    @Html.DropDownListFor(model => model.TimeZoneId, (IEnumerable<SelectListItem>)ViewData["timeZones"], new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TimeZoneId)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CultureCode, new { @class = "label-big" })
+                    @Html.DropDownListFor(model => model.CultureCode, (IEnumerable<SelectListItem>)ViewData["cultures"], new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CultureCode)
+                </div>
+            <br />
+            <button type="submit" class="btn">Change Personal</button>
+            <button type="button" class="btn cancel" onclick="toggleBox(-1)">Close</button>
+        </fieldset>
+    }
+</section>

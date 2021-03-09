@@ -1,0 +1,38 @@
+﻿@model AddStaffModel
+@{
+	ViewBag.Title = "Add Staff";
+}
+
+<section class="form">
+	@using (Html.BeginForm())
+	{
+		<h1> @ViewBag.Title </h1>
+		<hr />
+
+		@Html.AntiForgeryToken()
+
+		<fieldset>
+
+			<div class="form-group">
+				@Html.LabelFor(m => m.Username, new { @class = "label-big" })
+				@Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Please enter email" })
+				@Html.ValidationMessageFor(m => m.Username)
+			</div>
+			
+			<div class="form-group">
+				@Html.LabelFor(m => m.Role, new { @class = "label-big" })
+				@Html.DropDownListFor(m => m.Role, Model.Roles.Select(x => new SelectListItem { Text = x, Value = x }), new { @id = "branch", @class = "form-control", placeholder = "Please select role" })
+				@Html.ValidationMessageFor(m => m.Role)
+			</div>
+
+			@Html.HiddenFor(m => m.BranchId)
+
+			<br />
+			<br />
+
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</fieldset>
+	}
+</section>

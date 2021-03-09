@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CannotAddDuplicateAccount" xml:space="preserve">
+    <value>Account with the same account number {0} already exists.</value>
+  </data>
+  <data name="CannotAddDuplicateAccountType" xml:space="preserve">
+    <value>Account Type with the same name {0} already exists.</value>
+  </data>
+  <data name="CannotAddDuplicateBank" xml:space="preserve">
+    <value>Bank with the same name {0} already exists.</value>
+  </data>
+  <data name="CannotAddDuplicateBranch" xml:space="preserve">
+    <value>Branch with the same code {0} already exists.</value>
+  </data>
+  <data name="CannotAddNominee" xml:space="preserve">
+    <value>Nominee couldn't be added</value>
+  </data>
+  <data name="CannotAssignBranchManager" xml:space="preserve">
+    <value>Branch manager couldn't be assigned – either the staff is already assigned or your account doesn't have a right to assign the branch manager.</value>
+  </data>
+  <data name="CannotDeleteAccountType" xml:space="preserve">
+    <value>The specified account type couldn't be deleted as it has resources associated that must be deleted first.</value>
+  </data>
+  <data name="CannotDeleteBranch" xml:space="preserve">
+    <value>The specified branch couldn't be deleted as it has resources associated that must be deleted first.</value>
+  </data>
+  <data name="CannotDeleteBranchManager" xml:space="preserve">
+    <value>There's no such branch manager to remove.</value>
+  </data>
+  <data name="CannotDeleteIpRange" xml:space="preserve">
+    <value>The specified IP range couldn't be deleted as it has resources associated that must be deleted first.</value>
+  </data>
+  <data name="CannotDeleteNominee" xml:space="preserve">
+    <value>Nominee couldn't be deleted</value>
+  </data>
+  <data name="CannotDisableMFA" xml:space="preserve">
+    <value>Your bank policy does not allow you to disable the multi factor authentication</value>
+  </data>
+  <data name="DepositCreated" xml:space="preserve">
+    <value>Deposit created successfully</value>
+  </data>
+  <data name="FirewallStatusIsChanged" xml:space="preserve">
+    <value>Firewall status is successfully changed.</value>
+  </data>
+  <data name="InvalidMFAToken" xml:space="preserve">
+    <value>MFA token {0} is invalid.</value>
+  </data>
+  <data name="InvalidPasswordExpirationDays" xml:space="preserve">
+    <value>Password expiration days cannot be less than 30.</value>
+  </data>
+  <data name="MFAEnforced" xml:space="preserve">
+    <value>Your bank requires you to enable Two-Factor Authentication, please enable it to proceed.</value>
+  </data>
+  <data name="MFAPolicyIsChanged" xml:space="preserve">
+    <value>Two factor authentication policy is successfully updated. </value>
+  </data>
+  <data name="NomineeCreated" xml:space="preserve">
+    <value>Nominee created successfully</value>
+  </data>
+  <data name="NomineeInvited" xml:space="preserve">
+    <value>Nominee invited on the platform</value>
+  </data>
+  <data name="NotACustomerUser" xml:space="preserve">
+    <value>The specified username {0} is not a customer user.</value>
+  </data>
+  <data name="PasswordExpirationPolicyIsChanged" xml:space="preserve">
+    <value>Password expiration policy is successfully updated.</value>
+  </data>
+  <data name="PasswordExpired" xml:space="preserve">
+    <value>Your password is expired. Please reset the password.</value>
+  </data>
+  <data name="TransferCreated" xml:space="preserve">
+    <value>Transfer created successfully</value>
+  </data>
+  <data name="TwoFactorAuthChanged" xml:space="preserve">
+    <value>Your two factor authentication setting is updated.</value>
+  </data>
+  <data name="WithdrawalCreated" xml:space="preserve">
+    <value>Withdrawal created successfully</value>
+  </data>
+</root>

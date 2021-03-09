@@ -1,0 +1,256 @@
+﻿@{
+	ViewBag.Title = "Accounts";
+	ViewBag.jTableStyle = "~/Scripts/dist/jtable/themes/metro/blue/jtable.css";
+}
+
+<section class="home-content">
+	<h1> @ViewBag.Title </h1>
+	<hr />
+	<div id="tableContainer" class="jtable-div"></div>
+</section>
+
+@section scripts
+{
+	<script src="~/scripts/dist/jquery-ui.min.js"></script>
+	<script src="~/scripts/dist/jtable.min.js"></script>
+
+	<script type="text/javascript">
+		$(function() {
+
+			$('#tableContainer').jtable({
+				title: 'Accounts',
+				paging: true,
+				sorting: false,
+				columnSelectable: false,
+				AntiForgeryToken: '@Html.AntiForgeryTokenValue()',
+				toolbar: {
+					items: [
+						{
+							icon: true,
+							cssClass: 'jtable-toolbar-item-add-record',
+							text: 'Add New record',
+							click: function() {
+								window.location.href = '@Url.Action("Create")';
+							}
+						}
+					]
+				},
+				actions: {
+					listAction: '@Url.Action("List")',
+				},
+				fields: {
+					Id: {
+						key: true,
+						create: false,
+						edit: false,
+						list: false
+					},
+					Name: {
+						title: 'Name'
+					},
+					AccountNumber: {
+						title: 'Account Number'
+					},
+					AccountType: {
+						title: 'Account Type'
+					},
+					Branch: {
+						title: 'Branch'
+					},
+					Status: {
+						title: 'Status',
+						options: { '0': 'Pending Approval', '1': 'KYC Required', '2': 'Active', '3': 'Dormant', '4': 'Closed', '5': 'Freezed' }
+					},
+					Reason: {
+						title: 'Reason'
+					},
+					Nominees: {
+						title: '',
+						width: '5%',
+						sorting: false,
+						edit: false,
+						create: false,
+						listClass: 'child-opener-image-column',
+						display: function (e) {
+							//Create an image that will be used to open child table
+							var $img = $('<img class="child-opener-image" role="button" src="/images/staff.png" title="Nominees" />');
+							$img.click(function() {
+								$('#tableContainer').jtable('openChildTable',
+									$img.closest('tr'), //Parent row
+									{
+										title: "Nominees",
+										AntiForgeryToken: '@Html.AntiForgeryTokenValue()',
+										actions: {
+											listAction: '@Url.Action("List", "Nominee")?accountId=' + e.record.Id
+										},
+										fields: {
+											Id: {
+												key: true,
+												create: false,
+												edit: false,
+												list: false
+											},
+											Name: {
+												title: 'Name'
+											},
+											Username: {
+												title: 'Email'
+											}
+										}
+									}, function (data) { //opened handler
+										data.childTable.jtable('load');
+									});
+							});
+
+							//Return image to show on the person row
+							return $img;
+						}
+					}
+				},
+				rowButtons: [
+					function(data) {
+						return {
+							text: 'Change Status',
+							cssClass: 'jtable-change-status-command-button',
+							click: function(data) {
+								window.location.href = '@Url.Action("ChangeStatus")?accountId=' + data.record.Id;
+							}
+						};
+					},
+					function(data) {
+						return {
+							text: 'Deposit',
+							cssClass: 'jtable-deposit-command-button',
+							click: function(data) {
+								window.location.href = '@Url.Action("Deposit", "AccountDetails")?accountId=' + data.record.Id;
+							}
+						};
+					},
+					function(data) {
+						return data.record.AccountKind == 0
+							? {
+								text: 'Withdrawal',
+								cssClass: 'jtable-withdrawal-command-button',
+								click: function(data) {
+									window.location.href = '@Url.Action("Withdrawal", "AccountDetails")?accountId=' + data.record.Id;
+								}
+							}
+							: {};
+					},
+					function(data) {
+						return {
+							text: 'Details',
+							cssClass: 'jtable-statement-command-button',
+							click: function(data) {
+								window.location.href = '@Url.Action("Index", "AccountDetails")?accountId=' + data.record.Id;
+							}
+						};
+					},
+				]
+			}).jtable('load');
+		});
+	</script>
+}
+
+@section cssImport
+{
+	<link href="@Url.Content(ViewBag.jTableStyle)" rel="stylesheet" type="text/css" />
+
+	<style>
+		.child-opener-image {
+			cursor: pointer;
+		}
+
+		.child-opener-image-column {
+			text-align: center;
+		}
+
+		.jtable-dialog-form {
+			min-width: 220px;
+		}
+
+			.jtable-dialog-form input[type="text"] {
+				min-width: 200px;
+			}
+
+		.jtable-statement-command-button {
+			background: url('/images/statement.png') no-repeat;
+			width: 16px;
+			height: 16px;
+			opacity: 0.4;
+		}
+
+			.jtable-statement-command-button:hover {
+				opacity: 0.8;
+			}
+
+		.jtable-deposit-command-button {
+			background: url('/images/deposit.png') no-repeat;
+			width: 16px;
+			height: 16px;
+			opacity: 0.4;
+		}
+
+			.jtable-deposit-command-button:hover {
+				opacity: 0.8;
+			}
+
+		.jtable-withdrawal-command-button {
+			background: url('/images/withdraw.png') no-repeat;
+			width: 16px;
+			height: 16px;
+			opacity: 0.4;
+		}
+
+			.jtable-withdrawal-command-button:hover {
+				opacity: 0.8;
+			}
+
+		.jtable-change-status-command-button {
+			background: url('/images/status.png') no-repeat;
+			width: 16px;
+			height: 16px;
+			opacity: 0.4;
+		}
+
+			.jtable-change-status-command-button:hover {
+				opacity: 0.8;
+			}
+
+		div.jtable-main-container > div.jtable-title {
+			background-color: #008cba;
+		}
+
+		.jtable-column-header {
+			background-color: #808080;
+		}
+
+		.jtable-toolbar > .jtable-toolbar-item {
+			background-color: #808080;
+		}
+
+		.jtable-command-column-header {
+			background-color: #808080;
+		}
+
+		div.jtable-main-container > div.jtable-bottom-panel {
+			background-color: #808080;
+		}
+
+		.jtable-page-list > jtable-page-number-disabled {
+			background-color: #808080;
+		}
+
+		div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-space, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-first, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-last, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-previous, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-next, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-active {
+			background-color: #808080;
+		}
+
+		div.jtable-main-container > div.jtable-title div.jtable-toolbar span.jtable-toolbar-item {
+			background-color: #808080;
+		}
+
+			div.jtable-main-container > div.jtable-title div.jtable-toolbar span.jtable-toolbar-item:hover {
+				background-color: #008cba;
+			}
+	</style>
+}

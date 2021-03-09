@@ -1,0 +1,25 @@
+﻿@model TwoFactorAuthenticationModel
+@{
+	ViewBag.Title = "Two-Factor Verification";
+}
+
+<section class="form-container form-popup">
+	<h1>@ViewBag.Title</h1>
+	@using (Html.BeginForm("TwoFactorAuthentication", "user", FormMethod.Post))
+	{
+		@Html.AntiForgeryToken()
+		<fieldset>
+
+			<div class="form-group">
+				@Html.TextBoxFor(m => m.Token, new { placeholder = "Please enter Two-Factor Authentication Token received in email" })
+				@Html.ValidationMessageFor(m => m.Token)
+			</div>
+
+			<br />
+			<button type="submit" class="btn">Verify</button>
+			<nav class="form-group">
+				@Html.ActionLink("Click here", "TwoFactorAuthentication", new { resendToken = true }) to request a new token.
+			</nav>
+		</fieldset>
+	}
+</section>

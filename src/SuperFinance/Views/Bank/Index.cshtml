@@ -1,0 +1,85 @@
+﻿@{
+	ViewBag.Title = "Manage Bank";
+}
+<section class="container-form">
+	<h1> @ViewBag.Name </h1>
+	<h3> @ViewBag.Address </h3>
+	<hr />
+	<ul class="form-tab-links">
+		<li class="nav-item"><a class="nav-link" href="#firwallBox" data-index="@ManageBankActionId.SetFirewallStatus">Firewall</a></li>
+		<li class="nav-item"><a class="nav-link" href="#mfaBox" data-index="@ManageBankActionId.SetMFAPolicy">Two-Factor Auth</a></li>
+		<li class="nav-item"><a class="nav-link" href="#passwordExpirePolicyBox" data-index="@ManageBankActionId.SetPasswordExpirationPolicy">Password Expiration</a></li>
+	</ul>
+	<div data-index="@ManageBankActionId.SetFirewallStatus" class="hidden">
+		<partial name="_ChangeFirewallStatusPartial" model="(SetFirewallStatusModel) ViewBag.fModel" />
+	</div>
+	<div data-index="@ManageBankActionId.SetMFAPolicy" class="hidden">
+		<partial name="_MFAPolicyPartial" model="(SetMFAPolicyModel) ViewBag.mModel" />
+	</div>
+	<div data-index="@ManageBankActionId.SetPasswordExpirationPolicy" class="hidden">
+		<partial name="_PasswordExpirationPolicyPartial" model="(SetPasswordExpirationPolicy) ViewBag.pModel" />
+	</div>
+</section>
+
+@section Scripts {
+
+	<script type="text/javascript">
+		var action = '@ViewBag.ManageId';
+        $(function() {
+            var boxes = [];
+            var links = [];
+            $("div[data-index]").each(function() {
+                boxes[this.getAttribute("data-index")] = $(this);
+            });
+
+            $("a[data-index]").each(function() {
+                links[this.getAttribute("data-index")] = $(this);
+            });
+
+            $("a[data-index]").click(function(e) {
+                e.preventDefault();
+                toggleBox(this.getAttribute("data-index"));
+            });
+
+            window.toggleBox = function (index) {
+                for (var i in boxes) {
+                    if (i === index) boxes[index].removeClass("hidden");
+                    else boxes[i].addClass("hidden");
+                }
+
+                for (var j in links) {
+                    if (j === index) links[j].addClass("link-active");
+                    else links[j].removeClass("link-active");
+                }
+
+				if (index === 'EnforceMFA') {
+	                enforceMFAChanged();
+                }
+            }
+
+            toggleBox(action);
+        });
+
+        $(document).ready(function () {
+            window.setTimeout(function() {
+                $(".alert-success").fadeTo(1500, 0).slideUp(500, function(){
+                    $(this).remove();
+                });
+            }, 5000);
+
+			if (action === 'EnforceMFA') {
+	            enforceMFAChanged();
+            }
+        });
+
+		window.enforceMFAChanged = function () {
+			if ($('#enforceMfa').is(':checked')) {
+				$('#skipMfaCheckDiv').removeClass('hidden');
+			} else {
+				$('#skipMfaCheckDiv').addClass('hidden');
+				$('#skipMfaCheck').prop('checked', false);
+			}
+		}
+
+	</script>
+}

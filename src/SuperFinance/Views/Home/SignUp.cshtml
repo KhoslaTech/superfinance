@@ -1,0 +1,11 @@
+﻿@{
+	ViewBag.Title = "Sign Up";
+}
+
+<section class="container-form">
+	<h1>@ViewBag.Title</h1>
+	<ul class="form-tab-links">
+		<li class="nav-item mr-4 @Html.IsSelected("SignUp", "Bank", "form-tab-link-active")"> @Html.ActionLink("Bank Sign Up", "SignUp", "Bank", null, new { @class = "nav-link" })</li>
+		<li class="nav-item mr-4 @Html.IsSelected("SignUp", "User", "form-tab-link-active")"> @Html.ActionLink("Customer Sign Up", "SignUp", "User", null, new { @class = "nav-link" })</li>
+	</ul>
+</section>

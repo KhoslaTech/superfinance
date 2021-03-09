@@ -1,0 +1,13 @@
+﻿@model DateTime?
+@if (Model.HasValue)
+{
+    var date = "LocalizedDate".Equals(ViewData.ModelMetadata.DataTypeName, StringComparison.OrdinalIgnoreCase) ? Model.Value : Context.LocaleService().ToUserDateTime(Model.Value);
+@Html.TextBox("", !string.IsNullOrWhiteSpace(ViewData.ModelMetadata.DisplayFormatString)
+? date.ToString(ViewData.ModelMetadata.DisplayFormatString) 
+: date.ToString(),
+    new { @class = "dateTime" })
+}
+else
+{
+@Html.TextBox("", null, new { @class = "dateTime" })
+}

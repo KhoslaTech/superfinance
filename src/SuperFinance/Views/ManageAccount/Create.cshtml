@@ -1,0 +1,65 @@
+﻿@model CreateAccountModel
+@{
+	ViewBag.Title = "Create New Account";
+}
+
+<section class="form">
+	@using (Html.BeginForm())
+	{
+		<h1> @ViewBag.Title </h1>
+		<hr />
+
+		@Html.AntiForgeryToken()
+
+		<fieldset>
+			<div class="form-group">
+				@Html.LabelFor(m => m.Name, new { @class = "label-big" })
+				@Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Please enter name" })
+				@Html.ValidationMessageFor(m => m.Name)
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(model => model.Username, new { @class = "label-big" })
+				@Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "Please enter email" })
+				@Html.ValidationMessageFor(model => model.Username)
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(m => m.IdentityNumber, new { @class = "label-big" })
+				@Html.TextBoxFor(m => m.IdentityNumber, new { @class = "form-control", placeholder = "Please enter identity number" })
+				@Html.ValidationMessageFor(m => m.IdentityNumber)
+			</div>
+			
+			<div class="form-group">
+				@Html.LabelFor(m => m.Amount, new { @class = "label-big" })
+				@Html.TextBoxFor(m => m.Amount, new { @class = "form-control", placeholder = "Please enter amount" })
+				@Html.ValidationMessageFor(m => m.Amount)
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(m => m.NomineeUsername, new { @class = "label-big" })
+				@Html.TextBoxFor(m => m.NomineeUsername, new { @class = "form-control", placeholder = "Please enter nominee email address" })
+				@Html.ValidationMessageFor(m => m.NomineeUsername)
+			</div>
+			
+			<div class="form-group">
+				@Html.LabelFor(m => m.BranchId, new { @class = "label-big" })
+				@Html.DropDownListFor(m => m.BranchId, Model.Branches.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }), new { @id = "branch", @class = "form-control", placeholder = "Please select branch" })
+				@Html.ValidationMessageFor(m => m.BranchId)
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(m => m.AccountTypeId, new { @class = "label-big" })
+				@Html.DropDownListFor(m => m.AccountTypeId, Model.AccountTypes.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }), new { @id = "accountType", @class = "form-control", placeholder = "Please select account type" })
+				@Html.ValidationMessageFor(m => m.AccountTypeId)
+			</div>
+
+			<br />
+			<br />
+
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</fieldset>
+	}
+</section>

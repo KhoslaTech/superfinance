@@ -1,0 +1,29 @@
+﻿@model SuspendUserModel
+
+@{
+	ViewBag.Title = "Suspend User";
+}
+
+<section class="form" id="suspendForm">
+	@using (Html.BeginForm())
+	{
+		<h1> @ViewBag.Title </h1>
+		<hr />
+
+		@Html.AntiForgeryToken()
+
+		<fieldset>
+			<div class="form-group">
+				@Html.LabelFor(m => m.Reason, new { @class = "label-big" })
+				@Html.TextBoxFor(m => m.Reason, new { @class = "form-control", placeholder = "Please enter suspension reason" })
+				@Html.ValidationMessageFor(m => m.Reason)
+			</div>
+
+			<br />
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">Suspend</button>
+			</div>
+
+		</fieldset>
+	}
+</section>

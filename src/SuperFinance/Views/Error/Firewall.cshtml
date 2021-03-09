@@ -1,0 +1,18 @@
+﻿@model string
+@{
+	ViewBag.Title = "Forbidden by the Firewall";
+}
+
+<section class="error-content">
+	<figure>
+		<img class="error-img" src="~/images/firewall.png" alt="Forbidden by the Firewall">
+	</figure>
+	<h1>@ViewBag.Title</h1>
+	<hr />
+	<p>
+		Your IP @Model is not white-listed to execute the specified action.
+	</p>
+	<p>
+		If you believe that this should not be the case, contact your administrator at <a href="mailto:@Context.AppService().SupportMailId">@Context.AppService().SupportMailId</a>
+	</p>
+</section>

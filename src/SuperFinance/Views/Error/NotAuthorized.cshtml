@@ -1,0 +1,18 @@
+﻿@model string
+@{
+    ViewBag.Title = "Action Not Authorized";
+}
+
+<section class="error-content">
+    <figure>
+        <img class="error-img" src="~/images/403.png" alt="Not Authorized">
+    </figure>
+    <h1>@ViewBag.Title</h1>
+    <hr />
+    <p>
+        We're unable to authorize you for the specified action. REASON: @Model
+    </p>
+    <p>
+        If you believe that this should not be the case, contact your administrator at <a href="mailto:@Context.AppService().SupportMailId">@Context.AppService().SupportMailId</a>
+    </p>
+</section>

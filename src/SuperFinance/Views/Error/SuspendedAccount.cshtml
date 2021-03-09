@@ -1,0 +1,15 @@
+﻿@model string
+@{
+	ViewBag.Title = $"Not Allowed on {ViewBag.AccountStatus} Account";
+}
+
+<section class="error-content">
+	<h1>@ViewBag.Title</h1>
+	<hr />
+	<p>
+		The specified action isn't allowed to you on the account @ViewBag.AccountNumber because the account is marked as @ViewBag.AccountStatus.
+	</p>
+	<p>
+		If you believe that this should not be the case, contact your administrator at <a href="mailto:@Context.AppService().SupportMailId">@Context.AppService().SupportMailId</a>
+	</p>
+</section>

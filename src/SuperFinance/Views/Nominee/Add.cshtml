@@ -1,0 +1,32 @@
+﻿@model AddNomineeModel
+@{
+	ViewBag.Title = "Add Nominee";
+}
+
+<section class="form">
+	@using (Html.BeginForm())
+	{
+		<h1> @ViewBag.Title </h1>
+		<hr />
+
+		@Html.AntiForgeryToken()
+
+		<fieldset>
+
+			<div class="form-group">
+				@Html.LabelFor(m => m.Username, new { @class = "label-big" })
+				@Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Please enter email" })
+				@Html.ValidationMessageFor(m => m.Username)
+			</div>
+
+			@Html.HiddenFor(m => m.AccountId)
+
+			<br />
+			<br />
+
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</fieldset>
+	}
+</section>

@@ -1,0 +1,9 @@
+﻿@model DateTime?
+@if (Model.HasValue)
+{
+    var date = "LocalizedDate".Equals(ViewData.ModelMetadata.DataTypeName, StringComparison.OrdinalIgnoreCase) ? Model.Value : Context.LocaleService().ToUserDateTime(Model.Value);
+<text>@(!string.IsNullOrWhiteSpace(ViewData.ModelMetadata.DisplayFormatString)
+? date.ToString(ViewData.ModelMetadata.DisplayFormatString) 
+: date.ToString()
+)</text>
+}

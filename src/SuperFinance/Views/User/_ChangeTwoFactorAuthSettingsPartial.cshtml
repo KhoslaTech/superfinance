@@ -1,0 +1,19 @@
+﻿@model ChangeTwoFactorAuthSettingsModel
+
+<section class="form-container form-popup">
+	@using (Html.BeginForm("ChangeTwoFactorAuthSettings", "user", FormMethod.Post))
+	{
+		@Html.AntiForgeryToken()
+		<fieldset>
+			<div class="form-control-static">
+				@Html.CheckBoxFor(m => m.Enabled)
+				@Html.LabelFor(m => m.Enabled)
+			</div>
+
+			<br />
+			<button type="submit" class="btn">Update</button>
+			<button type="button" class="btn cancel" onclick="toggleBox(-1)">Close</button>
+
+		</fieldset>
+	}
+</section>

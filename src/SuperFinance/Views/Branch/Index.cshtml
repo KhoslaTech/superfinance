@@ -1,0 +1,197 @@
+﻿@{
+	ViewBag.Title = "Branches";
+	ViewBag.jTableStyle = "~/Scripts/dist/jtable/themes/metro/blue/jtable.css";
+}
+
+<section class="home-content">
+	<h1> @ViewBag.Title </h1>
+	<div id="tableContainer" class="jtable-div"></div>
+</section>
+
+@section scripts
+{
+	<script src="~/scripts/dist/jquery-ui.min.js"></script>
+	<script src="~/scripts/dist/jtable.min.js"></script>
+
+	<script type="text/javascript">
+		$(function() {
+			var branches, staffs;
+
+			$('#tableContainer').jtable({
+				title: 'Branches',
+				paging: true,
+				sorting: false,
+				columnSelectable: false,
+				AntiForgeryToken: '@Html.AntiForgeryTokenValue()',
+				actions: {
+					listAction: '@Url.Action("List")',
+					deleteAction: '@Url.Action("Delete")',
+					createAction: '@Url.Action("Add")',
+					updateAction: '@Url.Action("Edit")'
+				},
+				fields: {
+					Id: {
+						key: true,
+						create: false,
+						edit: false,
+						list: false
+					},
+					Name: {
+						title: 'Name'
+					},
+					Code: {
+						title: 'Code'
+					},
+					Address: {
+						title: 'Address'
+					},
+					Staff: {
+						title: '',
+						width: '5%',
+						sorting: false,
+						edit: false,
+						create: false,
+						listClass: 'child-opener-image-column',
+						display: function (e) {
+							// Will be null when a new record is added, wait till reload happens.
+							var staff = e.record.Staff;
+							//Create an image that will be used to open child table
+							var $img = $(
+								'<img class="child-opener-image" role="button" src="/images/staff.png" title="Branch Staff" />');
+							if (staff) {
+								$img.click(function() {
+								$('#tableContainer').jtable('openChildTable',
+									$img.closest('tr'), //Parent row
+									{
+										title: "Branch Staff",
+										AntiForgeryToken: '@Html.AntiForgeryTokenValue()',
+										toolbar: {
+											items: [
+												{
+													icon: true,
+													cssClass: 'jtable-toolbar-item-add-record',
+													text: 'Add New record',
+													click: function() {
+														window.location.href = '@Url.Action("AddStaff")/' + e.record.Id;
+													}
+												}
+											]
+										},
+										actions: {
+											deleteAction: '@Url.Action("Revoke","Permit")'
+										},
+										fields: {
+											Id: {
+												key: true,
+												create: false,
+												edit: false,
+												list: false
+											},
+											Name: {
+												title: 'Name'
+											},
+											Username: {
+												title: 'Email'
+											},
+											Role: {
+												title: 'Role'
+											}
+										}
+									},
+									function(data) { //opened handler
+										for (var i in staff) {
+											data.childTable.jtable('addRecord',
+												{
+													record: staff[i],
+													clientOnly: true,
+													animationsEnabled: false
+												});
+										}
+									});
+							});
+							}
+							//Return image to show on the person row
+							return $img;
+						}
+					}
+				},
+				recordAdded: function(event, data) {
+					$("#tableContainer").jtable('reload');
+				},
+				recordDeleted: function(event, data) {
+					$("#tableContainer").jtable('reload');
+				},
+				recordsLoaded: function(event, data) {
+					branches = data.serverResponse.Branches;
+					for (var i in branches) {
+						$('#tableContainer').jtable('addRecord',
+							{
+								record: branches[i],
+								clientOnly: true,
+								animationsEnabled: false
+							});
+					}
+				}
+			}).jtable('load');
+		});
+	</script>
+}
+
+@section cssImport
+{
+	<link href="@Url.Content(ViewBag.jTableStyle)" rel="stylesheet" type="text/css" />
+
+	<style>
+		.child-opener-image {
+			cursor: pointer;
+		}
+
+		.child-opener-image-column {
+			text-align: center;
+		}
+
+		.jtable-dialog-form {
+			min-width: 220px;
+		}
+
+			.jtable-dialog-form input[type="text"] {
+				min-width: 200px;
+			}
+
+		div.jtable-main-container > div.jtable-title {
+			background-color: #008cba;
+		}
+
+		.jtable-column-header {
+			background-color: #808080;
+		}
+
+		.jtable-toolbar > .jtable-toolbar-item {
+			background-color: #808080;
+		}
+
+		.jtable-command-column-header {
+			background-color: #808080;
+		}
+
+		div.jtable-main-container > div.jtable-bottom-panel {
+			background-color: #808080;
+		}
+
+		.jtable-page-list > jtable-page-number-disabled {
+			background-color: #808080;
+		}
+
+		div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-space, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-first, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-last, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-previous, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-next, div.jtable-main-container > div.jtable-bottom-panel .jtable-page-list .jtable-page-number-active {
+			background-color: #808080;
+		}
+
+		div.jtable-main-container > div.jtable-title div.jtable-toolbar span.jtable-toolbar-item {
+			background-color: #808080;
+		}
+
+			div.jtable-main-container > div.jtable-title div.jtable-toolbar span.jtable-toolbar-item:hover {
+				background-color: #008cba;
+			}
+	</style>
+}

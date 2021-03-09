@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>@ViewBag.Title - @Context.AppService().Title</title>
+
+	<link rel="stylesheet" href="~/css/dist/site.min.css" />
+	@RenderSection("cssImport", false)
+</head>
+<body>
+	<header id="header">
+		<partial name="_NavBarPartial" />
+	</header>
+
+	<main id="content" class="main container-fluid" role="main">
+		@RenderBody()
+	</main>
+
+	<footer id="footer" class="footer">
+		<p class="copyright">&copy; @DateTime.Now.Year - @Context.AppService().Title</p>
+		<ul class="social-links">
+			<li><a href=""><i class="fa fa-fw fa-facebook-square" data-toggle="tooltip" data-placement="top" title="Facebook" aria-label="Facebook"></i></a></li>
+			<li><a href=""><i class="fa fa-fw fa-twitter-square" data-toggle="tooltip" data-placement="top" title="Twitter" aria-label="Twitter"></i></a></li>
+			<li><a href=""><i class="fa fa-fw fa-instagram" data-toggle="tooltip" data-placement="top" title="Instagram" aria-label="Instagram"></i></a></li>
+		</ul>
+	</footer>
+
+	<div class="hidden">
+		@Html.ErrorProvider()
+	</div>
+
+	<script src="~/scripts/dist/jquery.min.js"></script>
+	<script src="~/scripts/dist/bootstrap.min.js"></script>
+	<script src="~/scripts/dist/jquery-ui.min.js"></script>
+	<script src="~/scripts/dist/jquery.validate.min.js"></script>
+	<script src="~/scripts/dist/jquery.validate.unobtrusive.min.js"></script>
+
+	@RenderSection("scripts", required: false)
+
+</body>
+</html>
