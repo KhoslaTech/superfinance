@@ -29,7 +29,7 @@ namespace SuperFinance.Security
 			throw new NotImplementedException("Use async");
 		}
 
-		public override async Task<int?> GetPasswordExpirationIntervalInDaysAsync(IUser user, CancellationToken cancellationToken)
+		public override async Task<int?> GetPasswordExpirationIntervalInDaysAsync(CancellationToken cancellationToken, IUser user = null)
 		{
 			if (this.securityContext.AuthDetails is SFIdentityAuthDetails authDetails)
 			{
